@@ -15,6 +15,7 @@ function getDateString() {
 app.post('/_matrix/push/v1/notify', async (req, res) => {
     try {
         const { notification } = req.body;
+        console.log(JSON.stringify(notification));
         const registrationIds = notification.devices
             .filter(device => device.app_id === "com.p2pchatter.app")
             .map(device => device.pushkey);
