@@ -17,7 +17,7 @@ app.post('/_matrix/push/v1/notify', async (req, res) => {
         const { notification } = req.body;
         console.log(JSON.stringify(notification));
         const registrationIds = notification.devices
-            .filter(device => device.data_message === 'android' ? device.app_id === "com.p2pchatter.app.data_message" : device.app_id === "com.p2pchatter.app")
+            .filter(device => device.data.data_message === 'android' ? device.app_id === "com.p2pchatter.app.data_message" : device.app_id === "com.p2pchatter.app")
             .map(device => device.pushkey);
 
         if (registrationIds.length === 0) {
@@ -26,7 +26,7 @@ app.post('/_matrix/push/v1/notify', async (req, res) => {
 
         const isMessage = typeof notification.event_id === "string" && notification.event_id !== "";
         const unread = notification.counts && notification.counts.unread || 0;
-        const title = unread < 2 ? "Neue Nachricht" : `${unread} ungelesene Unterhaltungen`;
+        const title = unread < 2 ? "Notification" : `${unread} unread conversations`;
 
         const notifyData = {
             collapse_key: default_notification,
@@ -34,7 +34,7 @@ app.post('/_matrix/push/v1/notify', async (req, res) => {
             data: notification,
             notification: isMessage ? {
                 title,
-                body: "App öffnen, um Nachricht zu entschlüsseln",
+                body: "Open app to view message",
                 badge: `${unread}`,
                 sound: "default",
                 icon: "notifications_icon",
