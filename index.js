@@ -17,7 +17,7 @@ app.post('/_matrix/push/v1/notify', async (req, res) => {
         const { notification } = req.body;
         console.log(JSON.stringify(notification));
         const registrationIds = notification.devices
-            .filter(device => device.app_id === "com.p2pchatter.app")
+            .filter(device => device.app_id === "com.p2pchatter.app.data_message")
             .map(device => device.pushkey);
 
         if (registrationIds.length === 0) {
