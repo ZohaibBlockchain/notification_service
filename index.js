@@ -1,13 +1,11 @@
 require('dotenv').config();
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const app = express();
-
 app.use(bodyParser.json());
-
 const default_notification = "com.p2pchatter.general_alert";
+
 
 function getDateString() {
     const date = new Date();
@@ -58,7 +56,6 @@ app.post('/_matrix/push/v1/notify', async (req, res) => {
         const rejected = response.data.results
             .filter(result => result.error)
             .map((result, index) => registrationIds[index]);
-
         res.json({ rejected });
     } catch (error) {
         console.error(`${getDateString()} Exception:`, error);
