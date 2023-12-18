@@ -34,6 +34,7 @@ app.post('/_matrix/push/v1/notify', async (req, res) => {
             data: notification,
             notification: isMessage ? {
                 title,
+                body: "Open app to view message",
                 badge: `${unread}`,
                 sound: "default",
                 icon: "notifications_icon",
